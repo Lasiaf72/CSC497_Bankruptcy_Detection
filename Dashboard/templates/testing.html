@@ -1,0 +1,422 @@
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+    integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- <link rel="stylesheet" href="mapping.css"> -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500&display=swap');
+
+
+
+    :root {
+      --percent100: 0;
+      --percent80: 88;
+      --percent75: 110;
+      --percent66: 153;
+      --percent60: 176;
+      --percent50: 220;
+      --percent40: 264;
+      --percent33: 301.5;
+      --percent25: 330;
+      --percent20: 352;
+      --percent0: 440;
+
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      /* color: white; */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      flex-direction: column;
+      background: #e0eafc;
+      background: -webkit-linear-gradient(to right, #16222A, #3A6073);
+      background: linear-gradient(to right, #757F9A, #D7DDE8);
+    }
+
+    .skill {
+      width: 160px;
+      height: 160px;
+      position: relative;
+
+    }
+
+    .outer {
+      height: 160px;
+      width: 160px;
+      border-radius: 50%;
+      padding: 20px;
+      box-shadow: 6px 6px 10px -1px rgba(0, 0, 0, 0.15),
+        -6px -6px 10px -1px rgba(255, 255, 255, 0.7);
+    }
+
+    .inner {
+      height: 120px;
+      width: 120px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 4px 4px 6px -1px rgba(0, 0, 0, 0.2),
+        inset -4px -4px 6px -1px rgba(255, 255, 255, 0.7),
+        -0.5px -0.5px 0px rgba(255, 255, 255, 1),
+        0.5px 0.5px 0px rgba(0, 0, 0, 0.15),
+        0px 12px 10px -10px rgba(0, 0, 0, 0.05);
+
+    }
+
+    #percentage {
+      font-weight: 600;
+      color: #555;
+    }
+
+    circle {
+      fill: none;
+      stroke: url(#GradientColor);
+      stroke-width: 20px;
+      stroke-dasharray: 440;
+      /* stroke-dashoffset: 440; */
+      animation: anim 2s linear forwards;
+    }
+
+    svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    @keyframes anim {
+      0% {
+        stroke-dashoffset: var(--percent0);
+      }
+
+      100% {
+        stroke-dashoffset: var(--percent100);
+      }
+
+
+
+
+
+    }
+
+    .container {
+      max-width: 325px;
+      width: 100%;
+      padding: 30px;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    }
+
+    .drag-area {
+      height: 160px;
+      border: 3px dashed #e0eafc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      margin: 10px auto;
+    }
+
+    h3 {
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+
+    .drag-area .icon {
+      font-size: 50px;
+      color: #1683ff;
+    }
+
+    .drag-area .header {
+      font-size: 20px;
+      font-weight: 500;
+      color: #34495e;
+    }
+
+    .drag-area .support {
+      font-size: 12px;
+      color: gray;
+      margin: 10px 0 15px 0;
+    }
+
+    .drag-area .button {
+      font-size: 20px;
+      font-weight: 500;
+      color: #1683ff;
+      cursor: pointer;
+    }
+
+    button.button {
+      font-size: 20px;
+      font-weight: 500;
+      color: #1683ff;
+      cursor: pointer;
+      /* background-color: #e0eafc; */
+      border: 0;
+      background: none;
+    }
+
+    .drag-area img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hide {
+      display: none;
+    }
+
+    select {
+      width: 400px;
+      padding: 15px;
+      font-size: 16px;
+      font-weight: 700;
+      font-family: 'Poppins', sans-serif;
+      border: none;
+      border-radius: 8px;
+      border: 2px solid #3f51b5;
+      box-shadow: 0 15px 15px #efefef;
+      appearance: none;
+      background: #e8eaf6 url(drop-down-arrow-4.png) no-repeat;
+      background-position: 95% 55%;
+      background-size: 22px;
+
+    }
+
+    ;
+
+    .custom-file-upload {
+      border: 1px solid #ccc;
+      display: inline-block;
+      padding: 6px 12px;
+      cursor: pointer;
+    }
+
+    ;
+
+    input[type="file"] {
+      display: none;
+    }
+
+    h1 {
+      line-height: 200px;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .extra {
+      display: none;
+    }
+
+    th:hover .extra {
+      display: inline-block;
+    }
+
+    input[type="submit"] {
+      font-size: 20px;
+      font-weight: 500;
+      color: #033063;
+      cursor: pointer;
+      /* background-color: #e0eafc; */
+      border: 0;
+      background: none;
+    }
+    td {
+  text-align: center;
+}
+th {
+  text-align: center;
+}
+  </style>
+  <title>Bankruptcy Detection</title>
+  <script>
+    root = document.documentElement;
+    var percent = {{ percentage | tojson}};
+    console.log(percent);
+    percent = 440 * parseFloat(percent);
+    if(percent!=0){
+    root.style.setProperty('--percent100', percent);
+  }else{
+    root.style.setProperty('--percent100', percent);
+  }
+
+  </script>
+</head>
+
+<body>
+  <h1>Bankruptcy Detection</h1>
+  <div class="skill">
+    <div class="outer">
+      <div class="inner">
+        <div id="percentage">
+
+        </div>
+      </div>
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="160px" height="160px">
+      <defs>
+        <linearGradient id="GradientColor">
+          <stop offset="0%" stop-color="#e91e63" />
+          <stop offset="100%" stop-color="#673ab7" />
+        </linearGradient>
+      </defs>
+      <circle cx="80" cy="80" r="70" stroke-linecap="round" />
+    </svg>
+
+  </div>
+  <br>
+  <div id="selection">
+  <select class="div-toggle" data-target=".my-info-1">
+    <option value="orange" data-show=".Manual">Insert data manually</option>
+    <option value="apple" data-show=".File">Upload csv file</option>
+
+  </select>
+</div>
+  <br>
+  <p>{{years}}</p>
+  <div class="my-info-1" id="my-info-1">
+    <div class="Manual"> <br><br>
+      <div id="input" style="width:880px" align="center">
+        <form action="/count" method="post" id="yearsDrop">
+          <select name="Number of Years" id="Number of Years">
+            <option value="2">2 Years</option>
+            <option value="3">3 Years</option>
+            <option value="4">4 Years</option>
+            <option value="5">5 Years</option>
+          </select>
+          <br>
+          <br>
+          <input type="submit" value="Select">
+        </form>
+        <br>
+        <br>
+        <form id="main_frame" action="/submit" method="post">
+          <table>
+            <tr id="head1">
+            </tr>
+            <tr id="input1">
+            </tr>
+            <tr id="head2">
+            </tr>
+            <tr id=input2>
+            </tr>
+          </table>
+          <br>
+          <button class="button" type="submit">Submit</button>
+
+        </form>
+        <br>
+        <button class="button" onclick="myFunction()">Predict</button>
+      </div>
+    </div>
+    <div class="File" id="File">
+      <div class="container">
+        <h3>Upload your File</h3>
+        <div class="drag-area">
+          <div class="icon">
+            <i class="fa-sharp fa-solid fa-file-csv"></i>
+          </div>
+          <span class="header">
+            <form action="/upload" method="post"><label style="cursor:pointer; color:#1683ff;"
+                class="custom-file-upload">
+                <input type="file" hidden required name="filename" accept=".csv"/>
+                Browse
+              </label> <br><br><button class="button">Upload</button></form>
+          </span>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script type="text/javascript">
+
+
+
+    var select = document.getElementById("Number of Years");
+    var index = {{ selected | tojson}};
+    index = parseInt(index);
+    select.selectedIndex = index;
+    var bool = {{ submitted | tojson}}
+    bool = parseInt(bool);
+    if (bool == 1) {
+      document.getElementById("yearsDrop").hidden = true;
+    }
+
+
+    var num = document.getElementById("percentage");
+    var node1 = document.getElementById("head1");
+    var nodeInput1 = document.getElementById("input1");
+    var node2 = document.getElementById("head2");
+    var nodeInput2 = document.getElementById("input2");
+    if (percent != 0) {
+
+      var counter = 0;
+      console.log(percent);
+      setInterval(() => {
+        if (counter >= 100 - (percent / 440) * 100) {
+          clearInterval();
+        }
+        else {
+          counter += 1;
+          num.innerHTML = counter + "%";
+        }
+
+      }, 25)
+      const arr = ["Current assets", "Cost of goods sold", "Depreciation and amortization", "Earnings before interest, taxes, depreciation and amortization", "Inventory", "Net Income", "Total Receivables", "Market value", "Net sales", "Total assets", "Total Long term debt", "Earnings before interest and taxes", "Gross Profit", "Total Current Liabilities", "Retained Earnings", "Total Revenue", "Total Liabilities", "Total Operating Expenses"]
+      const arrAbbr = ["CA", "CGS", "DA", "EBITDA", "Inventory", "NI", "TReceivables", "MV", "NS", "TA", "TLTD", "EBIT", "GP", "TCL", "RE", "TRevenue", "TL", "TOE"]
+      for (var i = 0; i < 9; i++) {
+        node1.innerHTML += '<th> <abbr title="' + arr[i] + '">' + arrAbbr[i] + '</abbr></th>'
+        nodeInput1.innerHTML += '<td><input type="text" name="X' + (i + 1) + '" style="width:100px" required></td>'
+        node2.innerHTML += '<th> <abbr title="' + arr[i + 9] + '">' + arrAbbr[i + 9] + '</abbr></th>'
+        nodeInput2.innerHTML += '<td><input type="text" name="X' + (i + 10) + '" style="width:100px" required></td>'
+      }
+    } else{
+    document.getElementById("File").innerHTML = "";
+    document.getElementById("percentage").innerHTML = "Result:";
+    document.getElementById("selection").innerHTML = "";
+    document.getElementById("yearsDrop").hidden = true;
+    for (var i = 0; i < 9; i++) {
+        node1.innerHTML += '<th> <abbr title="' + arr[i] + '">' + arrAbbr[i] + '</abbr></th>'
+        nodeInput1.innerHTML += '<td><input type="text" name="X' + (i + 1) + '" style="width:100px" required></td>'
+        node2.innerHTML += '<th> <abbr title="' + arr[i + 9] + '">' + arrAbbr[i + 9] + '</abbr></th>'
+        nodeInput2.innerHTML += '<td><input type="text" name="X' + (i + 10) + '" style="width:100px" required></td>'
+      }
+  }
+
+
+
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"
+    integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+
+    $(document).on('change', '.div-toggle', function () {
+      var target = $(this).data('target');
+      var show = $("option:selected", this).data('show');
+      $(target).children().addClass('hide');
+      $(show).removeClass('hide');
+    });
+    $(document).ready(function () {
+      $('.div-toggle').trigger('change');
+    });
+  </script>
+</body>
+
+</html>

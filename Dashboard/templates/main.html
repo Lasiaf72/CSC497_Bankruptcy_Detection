@@ -1,0 +1,200 @@
+<html lang="en">
+
+<head>
+    <!-- <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" > -->
+    <meta name="viewport" content="width=device-width, intitial-scale=1.0">
+    <title>Bankruptcy Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp" rel="stylesheet">
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    <!-- <link rel="stylesheet" href="../static/style.css"> -->
+
+    <script>
+        root = document.documentElement;
+        var percent = {{ percentage | tojson}};
+
+        console.log(percent);
+        var progress = 230 * parseFloat(percent);
+        console.log(progress);
+        root.style.setProperty('--percent100', progress);
+
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <aside>
+            <div class="top">
+                <div class="logo">
+                    <img src="{{url_for('static', filename='Logo_empty_background_clean.png')}}" />
+                    <h2>Bankruptcy<br><span class="danger">Detection</span></h2>
+                </div>
+                <div class="close" id="close-btn">
+                    <span class="material-icons-sharp">close</span>
+                </div>
+            </div>
+            <div class="sidebar">
+                <a href="#" onclick="mainMenu()">
+                    <span class="material-icons-sharp">grid_view</span>
+                    <h3>Insert Data Manually</h3>
+                </a>
+                <a href="#" onclick="uploadMenu()">
+                    <span class="material-icons-sharp">upload</span>
+                    <h3>Upload a File</h3>
+                </a>
+            </div>
+        </aside>
+        <!--                            End of aside                     -->
+
+        <main class="main">
+            <h1>Dashboard</h1>
+            <div class="insights">
+                <div class="sales">
+                    <span class="material-icons-sharp">analytics</span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Progress</h3>
+                            <h1 id="percentH"></h1>
+                        </div>
+                        <div class="progress">
+                            <svg>
+                                <circle cx='38' cy='38' r='36'></circle>
+                            </svg>
+                            <div class="number">
+                                <p id="percentP"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <small class="text-muted">{{years}}</small>
+                </div>
+            </div>
+            <!-- End of insights -->
+            <div class="recent-orders" id="here">
+                <h2>Features</h2>
+                <form action="/count" method="post" id="yearsDrop">
+                    <select name="Number of Years" id="Number of Years"
+                        onchange='if(this.value != 0) { this.form.submit(); }'>
+                        <option value="0">Please Select a Period</option>
+                        <option value="2">2 Years</option>
+                        <option value="3">3 Years</option>
+                        <option value="4">4 Years</option>
+                        <option value="5">5 Years</option>
+                    </select>
+                    <br>
+                    <br>
+
+                </form>
+
+                <form action="/submit" method="post" id="form" class="table hidden">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>Value</th>
+                                <th>Feature</th>
+                                <th>Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                    <br>
+                    <button>Submit</button>
+                </form>
+            </div>
+        </main>
+        <div class="File hidden" id="File">
+            <div class="container">
+                <h3>Upload your File</h3>
+                <div class="drag-area">
+                    <span class="material-icons-sharp">
+                        upload_file
+                    </span>
+                    <span class="header">
+                        <form action="/upload" method="post" enctype="multipart/form-data"><label style="cursor:pointer; color:#1683ff;"
+                                class="custom-file-upload">
+                                <input type="file" hidden required name="filename" accept=".csv"/>
+                                Browse
+                            </label> <br><br><button class="button">Upload</button>
+                        </form>
+                    </span>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- End of Main -->
+        <div class="right">
+            <div class="top">
+                <button id="menu-btn">
+                    <span class="material-icons-sharp">menu</span>
+                </button>
+                <div class="theme-toggler">
+                    <span class="material-icons-sharp active" id="light">light_mode</span>
+                    <span class="material-icons-sharp" id="dark"> dark_mode</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <script src="{{url_for('static', filename='features.js')}}"></script> -->
+    <script>
+
+        var select = document.getElementById("Number of Years");
+        var index = {{ selected | tojson}};
+        console.log(index);
+        index = parseInt(index);
+        select.selectedIndex = index;
+        if (index != 0) {
+            document.querySelector(".table").classList.remove("hidden");
+            temp = 100 - (parseFloat(percent) * 100);
+            temp = Math.round(temp * 100) / 100
+            document.getElementById("percentP").innerHTML = temp.toString();
+        }
+        attributes = ["Current assets", "Cost of goods sold", "Depreciation and amortization",
+            "Earnings before interest, taxes, depreciation and amortization", "Inventory", "Net Income",
+            "Total Receivables", "Market value", "Net sales", "Total assets", "Total Long term debt",
+            "Earnings before interest and taxes", "Gross Profit", "Total Current Liabilities", "Retained Earnings",
+            "Total Revenue", "Total Liabilities", "Total Operating Expenses"]
+
+        for (let i = 0; i < attributes.length / 2; i++) {
+            const tr = document.createElement('tr');
+            const trContent = `
+                        <tr>
+                        <td>${attributes[i]}</td>
+                        <td><input type="text" required name=X${(i + 1)}></td>
+                        <td>${attributes[i + 9]}</td>
+                        <td><input type="text" required name=X${(i + 10)}></td>
+                        </tr>
+                        `;
+            tr.innerHTML = trContent;
+            document.querySelector('table tbody').appendChild(tr);
+        }
+
+        console.log(document.getElementById('light').classList.value);
+
+
+
+
+    </script>
+    <script src="{{url_for('static', filename='index.js')}}"></script>
+    <!-- <script src="../static/index.js"></script> -->
+    <script>
+        function uploadMenu() {
+            var main = document.querySelector("main");
+            var menu = document.querySelector(".File");
+            main.classList.add("hidden");
+            menu.classList.remove("hidden");
+        }
+        function mainMenu() {
+            var main = document.querySelector("main");
+            var menu = document.querySelector(".File");
+            menu.classList.add("hidden");
+            main.classList.remove("hidden");
+        }
+    </script>
+    <script src="{{url_for('static', filename='darkmode.js')}}"></script>
+
+</body>
+
+</html>

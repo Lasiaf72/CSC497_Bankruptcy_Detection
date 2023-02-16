@@ -1,0 +1,175 @@
+<html lang="en">
+
+<head>
+    <!-- <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" > -->
+    <meta name="viewport" content="width=device-width, intitial-scale=1.0">
+    <title>Bankruptcy Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp" rel="stylesheet">
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    <link rel="stylesheet" href="../static/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+
+    <script>
+        root = document.documentElement;
+        var num = {{ percent | tojson }};;
+
+        console.log(num);
+        // var progress = 230 * (1-parseFloat(num));
+        // console.log(progress);
+        // root.style.setProperty('--percent100', progress);
+
+    </script>
+
+</head>
+
+<body>
+    <div class="container">
+        <aside>
+            <div class="top">
+                <div class="logo">
+                    <img src="{{url_for('static', filename='Logo_empty_background_clean.png')}}" />
+                    <h2>Bankruptcy<br><span class="danger">Detection</span></h2>
+                </div>
+                <div class="close" id="close-btn">
+                    <span class="material-icons-sharp">close</span>
+                </div>
+            </div>
+            <div class="sidebar">
+                <a href="#" onclick="company(0)">
+                    <span class="material-icons-sharp">grid_view</span>
+                    <h3 id="first_company"></h3>
+                </a>
+            </div>
+        </aside>
+        <!--                            End of aside                     -->
+        <main>
+            <h1>Dashboard</h1>
+            <div class="insights">
+                <div class="sales">
+                    <span class="material-icons-sharp">analytics</span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Bankruptcy Percentage</h3>
+                            <h1 id="percentH"></h1>
+                        </div>
+                        <div class="progress">
+                            <svg>
+                                <circle cx='38' cy='38' r='36'></circle>
+                            </svg>
+                            <div class="number">
+                                <p id="percentP"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <small class="text-muted">Last 24 Hours</small>
+                </div>
+            </div>
+            <!-- End of insights -->
+            <div class="recent-orders" id="here">
+                <h2>Features</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Value</th>
+                            <th>Feature</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+
+            </div>
+        </main>
+        <!-- End of Main -->
+        <div class="right">
+            <div class="top">
+                <button id="menu-btn">
+                    <span class="material-icons-sharp">menu</span>
+                </button>
+                <div class="theme-toggler">
+                    <span class="material-icons-sharp active">light_mode</span>
+                    <span class="material-icons-sharp"> dark_mode</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <script src="{{url_for('static', filename='features.js')}}"></script> -->
+    <script>
+        var companyAndValue = {{ company_and_value | tojson }};
+        // num = Math.round(num * 10000) / 100
+        // document.getElementById("percentP").innerHTML = num.toString();
+        // document.getElementById("percentH").innerHTML = num.toString();
+        // document.body.classList.toggle('percent50');
+        
+        for (let i = 1; i < companyAndValue.length; i++) {
+            document.querySelector(".sidebar").innerHTML += `
+                                                            <a href="#" onclick="company(${i})">
+                                                            <span class="material-icons-sharp">grid_view</span>
+                                                            <h3>${companyAndValue[i][0]}</h3>
+                                                            </a>
+                                                            `;
+        }
+        document.getElementById("first_company").innerHTML=companyAndValue[0][0];
+        company(0);
+        // test = companyAndValue[0][1];
+        // for (let i = 0; i < test.length / 2; i++) {
+        //             const tr = document.createElement('tr');
+        //             const trContent = `
+        //                 <tr>
+        //                 <td>${test[i][0]}</td>
+        //                 <td>${test[i][1]}</td>
+        //                 <td>${test[i + 9][0]}</td>
+        //                 <td>${test[i + 9][1]}</td>
+        //                 </tr>
+        //                 `;
+        //             tr.innerHTML = trContent;
+        //             document.querySelector('table tbody').appendChild(tr);
+        //         }
+        function company(index) {
+            percentOfCompany(index);
+            test = companyAndValue[index][1];
+            var e = document.querySelector('table tbody');
+            var child = e.lastElementChild;
+            while (child) {
+                e.removeChild(child);
+                child = e.lastElementChild;
+            }
+                for (let i = 0; i < test.length / 2; i++) {
+                    const tr = document.createElement('tr');
+                    const trContent = `
+                        <tr>
+                        <td>${test[i][0]}</td>
+                        <td>${test[i][1]}</td>
+                        <td>${test[i + 9][0]}</td>
+                        <td>${test[i + 9][1]}</td>
+                        </tr>
+                        `;
+                    tr.innerHTML = trContent;
+                    e.appendChild(tr);
+                }
+                $("#here").load(window.location.href + " #here");
+        }
+        function percentOfCompany(index){
+            var perc = parseFloat(num[index]);
+            var progress = 230 * (1-perc);
+            console.log(progress);
+            root.style.setProperty('--percent100', progress);
+            console.log(perc);
+            perc = Math.round(perc * 10000) / 100
+            document.getElementById("percentP").innerHTML = perc.toString();
+            document.getElementById("percentH").innerHTML = perc.toString();
+            $(".progress").load(window.location.href + " .progress");
+        }
+    </script>
+    <script src="{{url_for('static', filename='index.js')}}"></script>
+    <script src="{{url_for('static', filename='darkmode.js')}}"></script>
+
+</body>
+
+</html>
